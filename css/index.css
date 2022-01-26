@@ -1,0 +1,286 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --backColor: #faf8ef;
+  --buttonColor: #8f7a66;
+  --buttonTextColor: #f9f6f2;
+  --boardColor: #bbada0;
+  --cellColor: rgba(238, 228, 218, 0.35);
+  --scoreTitleColor:#eee4da;
+  --titleColor: #776e65;
+
+  --cell-border: 5px;
+  --cell-gap: 10px;
+
+  --cell-width: 112.5px;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  background-color: var(--backColor);
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  padding: 20px;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 500px;
+  margin-bottom: 20px;
+}
+
+.info__title {
+  font-size: 80px;
+  line-height: 80px;
+  color: var(--titleColor);
+}
+
+.info__scores {
+  display: flex;
+  gap: 10px;
+}
+
+.scores__game,
+.scores__best {
+  background-color: var(--boardColor);
+  min-width: 70px;
+  max-height: 80px;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  color: #fff;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.scores__game::before,
+.scores__best::before {
+  display: block;
+  text-transform: uppercase;
+  font-size: 16px;
+  color: var(--scoreTitleColor);
+}
+
+.scores__game::before {
+  content: 'Score';
+}
+.scores__best::before {
+  content: 'Best';
+}
+
+.control-block {
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.button {
+  border: none;
+  border-radius: 5px;
+  padding: 15px 20px;
+  color: var(--buttonTextColor);
+  font-size: 16px;
+  font-weight: 500;
+  background-color: var(--buttonColor);
+  transition: .1s ease-out;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #a18972;
+}
+
+.button:active {
+  background-color: #5f5143;
+}
+
+.game-board {
+  background-color: var(--boardColor);
+  border-radius: 10px;
+  width: 500px;
+  height: 500px;
+}
+
+.cells-container {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  width: inherit;
+  height: inherit;
+  font-size: 30px;
+  font-weight: 500;
+  text-align: center;
+  gap: var(--cell-gap);
+  padding: 10px;
+}
+
+.cells-row {
+  display: grid;
+  gap: var(--cell-gap);
+  height: 100%;
+  grid-template-columns: repeat(4, 1fr) ;
+}
+
+.cells-row__cell {
+  height: 100%;
+  border-radius: var(--cell-border);
+  background-color: var(--cellColor);
+}
+
+/* Tiles styles */
+.tiles-container {
+  position: absolute;
+  /* display: grid; */
+  /* grid-template-columns: repeat(4, 1fr); */
+  /* gap: 10px; */
+}
+
+.tile {
+  position: absolute;
+  border-radius: var(--cell-border);
+  width: 112.5px;
+  height: 112.5px;
+}
+
+.tile-2 {
+  background-color: rgb(238, 238, 213);
+}
+
+.tile-4 {
+  background-color: rgb(221, 221, 154);
+}
+
+.tile-8 {
+  background-color: rgb(241, 196, 99);
+}
+
+.tile-16 {
+  background-color: rgb(236, 153, 75);
+}
+
+.tile-32 {
+  background-color: rgb(248, 162, 33);
+}
+
+.tile-64 {
+  background-color: rgb(250, 45, 45);
+}
+
+.tile-128 {
+  background-color: rgb(105, 48, 197);
+}
+
+.tile-256 {
+  background-color: rgb(51, 218, 195);
+}
+
+.tile-512 {
+  background-color: rgb(173, 173, 65);
+}
+
+.tile-1024 {
+  background-color: rgb(113, 202, 40);
+}
+
+.tile-2048 {
+  background-color: rgb(44, 201, 44);
+}
+
+.tile-4096 {
+  background-color: rgb(189, 120, 17);
+}
+
+.tile-8192 {
+  background-color: rgb(180, 40, 117);
+}
+
+/* Positions */
+/* 1 */
+.pos0-0 {
+}
+/* 2 */
+.pos0-1 {
+  transform: translateX(calc(100% + var(--cell-gap)));
+}
+/* 3 */
+.pos0-2 {
+  transform: translateX(calc(2 * 100% + 2 * var(--cell-gap)));
+}
+/* 4 */
+.pos0-3 {
+  transform: translateX(calc(3 * 100% + 3 * var(--cell-gap)));
+}
+
+/* 5 */
+.pos1-0 {
+  transform: translate(0, calc(1 * 100% + 1 * var(--cell-gap)));
+}
+
+/* 6 */
+.pos1-1 {
+  transform: translateX(calc(1 * 100% + 1 * var(--cell-gap))) translateY(calc(1 * 100% + 1 * var(--cell-gap)));
+}
+
+/* 7 */
+.pos1-2 {
+  transform: translateX(calc(2 * 100% + 2 * var(--cell-gap))) translateY(calc(1 * 100% + 1 * var(--cell-gap)));
+}
+
+/* 8 */
+.pos1-3 {
+  transform: translateX(calc(3 * 100% + 3 * var(--cell-gap))) translateY(calc(1 * 100% + 1 * var(--cell-gap)));
+}
+
+/* 9 */
+.pos2-0 {
+  transform: translateX(calc(0 * 100% + 0 * var(--cell-gap))) translateY(calc(2 * 100% + 2 * var(--cell-gap)));
+}
+
+/* 10 */
+.pos2-1 {
+  transform: translateX(calc(1 * 100% + 1 * var(--cell-gap))) translateY(calc(2 * 100% + 2 * var(--cell-gap)));
+}
+
+/* 11 */
+.pos2-2 {
+  transform: translateX(calc(2 * 100% + 2 * var(--cell-gap))) translateY(calc(2 * 100% + 2 * var(--cell-gap)));
+}
+
+/* 12 */
+.pos2-3 {
+  transform: translateX(calc(3 * 100% + 3 * var(--cell-gap))) translateY(calc(2 * 100% + 2 * var(--cell-gap)));
+}
+
+/* 13 */
+.pos3-0 {
+  transform: translateX(calc(0 * 100% + 0 * var(--cell-gap))) translateY(calc(3 * 100% + 3 * var(--cell-gap)));
+}
+
+/* 14 */
+.pos3-1 {
+  transform: translateX(calc(1 * 100% + 1 * var(--cell-gap))) translateY(calc(3 * 100% + 3 * var(--cell-gap)));
+}
+
+/* 15 */
+.pos3-2 {
+  transform: translateX(calc(2 * 100% + 2 * var(--cell-gap))) translateY(calc(3 * 100% + 3 * var(--cell-gap)));
+}
+
+/* 13 */
+.pos3-3 {
+  transform: translateX(calc(3 * 100% + 3 * var(--cell-gap))) translateY(calc(3 * 100% + 3 * var(--cell-gap)));
+}

@@ -10,10 +10,72 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/index.css" />
     <title>2048 Game</title>
   </head>
   <body>
-    
+    <main class="container">
+      <section class="header">
+        <section class="info-block block">
+          <h1 class="info__title">2048</h1>
+          <div class="info__scores">
+            <div class="scores__game">0</div>
+            <div class="scores__best">0</div>
+          </div>
+        </section>
+        <section class="control-block block">
+          <input class="button" type="button" value="Reset" id="btn_reset" />
+          <input class="button" type="button" value="New Game" id="btn_newgame" />
+        </section>
+      </section>
+      <section class="game-board">
+        <div class="cells-container">
+          <div class="cells-row">
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+          </div>
+          <div class="cells-row">
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+          </div>
+          <div class="cells-row">
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+          </div>
+          <div class="cells-row">
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+            <div class="cells-row__cell"></div>
+          </div>
+          <!-- Tiles -->
+        <div class="tiles-container">
+          <div class="tile pos0-0 tile-2">1</div>
+          <div class="tile pos0-1 tile-4">2</div>
+          <div class="tile pos0-2 tile-8">3</div>
+          <div class="tile pos0-3 tile-16">4</div>
+          <div class="tile pos1-0 tile-32">5</div>
+          <div class="tile pos1-1 tile-64">6</div>
+          <div class="tile pos1-2 tile-128">7</div>
+          <div class="tile pos1-3 tile-256">8</div>
+          <div class="tile pos2-0 tile-512">9</div>
+          <div class="tile pos2-1 tile-1024">10</div>
+          <div class="tile pos2-2 tile-2048">11</div>
+          <div class="tile pos2-3 tile-4096">12</div>
+          <div class="tile pos3-0 tile-8192">13</div>
+          <div class="tile pos3-1 tile-256">14</div>
+          <div class="tile pos3-2 tile-32">15</div>
+          <div class="tile pos3-3 tile-2">16</div>
+      </div>
+        </div>
+        
+      </section>
+    </main>
   </body>
 </html>
