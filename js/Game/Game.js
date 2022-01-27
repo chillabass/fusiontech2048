@@ -67,6 +67,9 @@ export default class Game {
 
   #moveLeft() {
     console.log('move left');
+    // Shift tiles
+    
+
     // Calculate
     for (let i = 0; i < this._sizeOfBoard; ++i) {
       for (let j = 1; j < this._sizeOfBoard; ++j) {
@@ -77,7 +80,8 @@ export default class Game {
         }
       }
     }
-    // Shift tiles
+
+    // Shift again
 
     console.log(this.boardOfTiles);
   }
