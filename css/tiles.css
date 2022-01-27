@@ -1,0 +1,177 @@
+/* Tiles styles */
+:root {
+  --fsz-1: 60px;
+  --fsz-2: 50px;
+  --fsz-3: 45px;
+  --fsz-4: 40px;
+}
+
+.tiles-container {
+  position: absolute;
+}
+
+.tile {
+  position: absolute;
+  border-radius: var(--cell-border);
+  width: var(--cell-width);
+  height: var(--cell-width);
+  color: #727070;
+  font-size: var(--fsz-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile__value {
+  
+}
+
+.tile-2 {
+  background-color: #eee4da;
+}
+
+.tile-4 {
+  background-color: #eee1c9;
+}
+
+.tile-8 {
+  color: #f9f6f2;
+  background-color: #f3b27a;
+}
+
+.tile-16 {
+  color: #f9f6f2;
+  background-color: #f69664;
+  font-size: var(--fsz-2);
+}
+
+.tile-32 {
+  color: #f9f6f2;
+  background-color: #f77c5f;
+  font-size: var(--fsz-2);
+}
+
+.tile-64 {
+  color: #f9f6f2;
+  background-color: #f75f3b;
+  font-size: var(--fsz-2);
+}
+
+.tile-128 {
+  color: #f9f6f2;
+  background-color: #edd073;
+  font-size: var(--fsz-3);
+}
+
+.tile-256 {
+  color: #f9f6f2;
+  background-color: #edcc62;
+  font-size: var(--fsz-3);
+}
+
+.tile-512 {
+  color: #f9f6f2;
+  background-color: #edc950;
+  font-size: var(--fsz-3);
+}
+
+.tile-1024 {
+  color: #f9f6f2;
+  background-color: #edc53f;
+  font-size: var(--fsz-4);
+}
+
+.tile-2048 {
+  color: #f9f6f2;
+  background-color: #edc22e;
+  font-size: var(--fsz-4);
+}
+
+.tile-4096 {
+  color: #f9f6f2;
+  background-color: #f19204;
+  font-size: var(--fsz-4);
+}
+
+.tile-8192 {
+  color: #f9f6f2;
+  background-color: #f15b04;
+  font-size: var(--fsz-4);
+}
+
+/* Positions */
+/* 1 */
+.pos0-0 {
+}
+/* 2 */
+.pos0-1 {
+  transform: translateX(calc(100% + var(--cell-gap)));
+}
+/* 3 */
+.pos0-2 {
+  transform: translateX(calc(2 * 100% + 2 * var(--cell-gap)));
+}
+/* 4 */
+.pos0-3 {
+  transform: translateX(calc(3 * 100% + 3 * var(--cell-gap)));
+}
+
+/* 5 */
+.pos1-0 {
+  transform: translate(0, calc(1 * 100% + 1 * var(--cell-gap)));
+}
+
+/* 6 */
+.pos1-1 {
+  transform: translateX(calc(1 * 100% + 1 * var(--cell-gap))) translateY(calc(1 * 100% + 1 * var(--cell-gap)));
+}
+
+/* 7 */
+.pos1-2 {
+  transform: translateX(calc(2 * 100% + 2 * var(--cell-gap))) translateY(calc(1 * 100% + 1 * var(--cell-gap)));
+}
+
+/* 8 */
+.pos1-3 {
+  transform: translateX(calc(3 * 100% + 3 * var(--cell-gap))) translateY(calc(1 * 100% + 1 * var(--cell-gap)));
+}
+
+/* 9 */
+.pos2-0 {
+  transform: translateX(calc(0 * 100% + 0 * var(--cell-gap))) translateY(calc(2 * 100% + 2 * var(--cell-gap)));
+}
+
+/* 10 */
+.pos2-1 {
+  transform: translateX(calc(1 * 100% + 1 * var(--cell-gap))) translateY(calc(2 * 100% + 2 * var(--cell-gap)));
+}
+
+/* 11 */
+.pos2-2 {
+  transform: translateX(calc(2 * 100% + 2 * var(--cell-gap))) translateY(calc(2 * 100% + 2 * var(--cell-gap)));
+}
+
+/* 12 */
+.pos2-3 {
+  transform: translateX(calc(3 * 100% + 3 * var(--cell-gap))) translateY(calc(2 * 100% + 2 * var(--cell-gap)));
+}
+
+/* 13 */
+.pos3-0 {
+  transform: translateX(calc(0 * 100% + 0 * var(--cell-gap))) translateY(calc(3 * 100% + 3 * var(--cell-gap)));
+}
+
+/* 14 */
+.pos3-1 {
+  transform: translateX(calc(1 * 100% + 1 * var(--cell-gap))) translateY(calc(3 * 100% + 3 * var(--cell-gap)));
+}
+
+/* 15 */
+.pos3-2 {
+  transform: translateX(calc(2 * 100% + 2 * var(--cell-gap))) translateY(calc(3 * 100% + 3 * var(--cell-gap)));
+}
+
+/* 13 */
+.pos3-3 {
+  transform: translateX(calc(3 * 100% + 3 * var(--cell-gap))) translateY(calc(3 * 100% + 3 * var(--cell-gap)));
+}
