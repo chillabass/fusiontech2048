@@ -51,6 +51,20 @@ export default class Game {
     this.controller.render(this.boardOfTiles);
   }
 
+  #checkGameOver() {
+    for (let i = 0; i < this.sizeOfBoard; ++i) {
+      for (let j = 1; j < this.sizeOfBoard; ++j) {
+        if (this.boardOfTiles[i][j] === 0 
+        ||  this.boardOfTiles[i][j - 1] === 0
+        ||  this.boardOfTiles[i][j] === this.boardOfTiles[i][j - 1]
+        ||  this.boardOfTiles[j][i] === this.boardOfTiles[j - 1][i]) {
+              return false;
+        }
+      }
+    }
+    return true;
+  }
+
   moveTo(direction) {
     const moveFunctions = {
       'ArrowLeft': this.#moveLeft,
@@ -60,13 +74,20 @@ export default class Game {
     };
 
     if (moveFunctions.hasOwnProperty(direction)) {
-      let isShifted = moveFunctions[direction].call(this);
-      if (isShifted) {
+      let result = moveFunctions[direction].call(this);
+      if (result.isShifted) {
         const tile = this.#generateNewTile();
         this.boardOfTiles[tile.x][tile.y] = tile.value;
         this.controller.render(this.boardOfTiles);
+        this.controller.updateScore(result.addedScores, this.gameScore);
       }
+
       console.log(this.boardOfTiles);
+    }
+    if (this.#checkGameOver()) {
+      console.log('game over');
+    } else {
+
     }
   }
 
@@ -74,7 +95,7 @@ export default class Game {
     console.log('move left');
 
     let isShifted = false;
-    
+    let addedScores = 0;
     for (let i = 0; i < this.sizeOfBoard; ++i) {
       // Calculate tiles
       for (let j = 0; j < this.sizeOfBoard; ++j) {
@@ -88,6 +109,7 @@ export default class Game {
             if (this.boardOfTiles[i][k] === this.boardOfTiles[i][j]) {
               isShifted = true;
               this.boardOfTiles[i][j] <<= 1;
+              addedScores += this.boardOfTiles[i][j];
               this.boardOfTiles[i][k] = 0;
               break;
             } else {
@@ -110,13 +132,16 @@ export default class Game {
         }
       }
     }
-    return isShifted;
+    this.gameScore += addedScores;
+    
+    return {addedScores, isShifted};
   }
 
   #moveRight() {
     console.log('move right');
 
     let isShifted = false;
+    let addedScores = 0;
     for (let i = 0; i < this.sizeOfBoard; ++i) {
       for (let j = this.sizeOfBoard - 1; j >= 0; --j) {
         if (this.boardOfTiles[i][j] === 0) {
@@ -129,6 +154,7 @@ export default class Game {
             if (this.boardOfTiles[i][j] === this.boardOfTiles[i][k]) {
               isShifted = true;
               this.boardOfTiles[i][j] <<= 1;
+              addedScores += this.boardOfTiles[i][j];
               this.boardOfTiles[i][k] = 0;
               break;
             } else {
@@ -151,7 +177,9 @@ export default class Game {
         }
       }
     }
-    return isShifted;
+    this.gameScore += addedScores;
+
+    return {addedScores, isShifted};
   }
 
 
@@ -159,6 +187,7 @@ export default class Game {
     console.log('move up');
 
     let isShifted = false;
+    let addedScores = 0;
     for (let j = 0; j < this.sizeOfBoard; ++j) {
       for (let i = 0; i < this.sizeOfBoard; ++i) {
         if (this.boardOfTiles[i][j] === 0) {
@@ -171,6 +200,7 @@ export default class Game {
             if (this.boardOfTiles[k][j] === this.boardOfTiles[i][j]) {
               isShifted = true;
               this.boardOfTiles[i][j] <<= 1;
+              addedScores += this.boardOfTiles[i][j];
               this.boardOfTiles[k][j] = 0;
               break;
             } else {
@@ -192,14 +222,17 @@ export default class Game {
           this.boardOfTiles[i][j] = 0;
         }
       }
-    }
-    return isShifted;
+    }    
+    this.gameScore += addedScores;
+
+    return {addedScores, isShifted};
   }
 
   #moveDown() {
     console.log('move down');
 
     let isShifted = false;
+    let addedScores = 0;
     for (let j = 0; j < this.sizeOfBoard; ++j) {
       for (let i = this.sizeOfBoard - 1; i >= 0; --i) {
         if (this.boardOfTiles[i][j] === 0) {
@@ -212,6 +245,7 @@ export default class Game {
             if (this.boardOfTiles[i][j] === this.boardOfTiles[k][j]) {
               isShifted = true;
               this.boardOfTiles[i][j] <<= 1;
+              addedScores += this.boardOfTiles[i][j];
               this.boardOfTiles[k][j] = 0;
               break;
             } else {
@@ -234,6 +268,8 @@ export default class Game {
         }
       }
     }
-    return isShifted;
+    this.gameScore += addedScores;
+
+    return {addedScores, isShifted};
   }
 }

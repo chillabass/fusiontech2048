@@ -4,11 +4,14 @@ export default class UIController {
   constructor(sizeOfBoard) {
     this.sizeOfBoard = sizeOfBoard;
     this._board = document.querySelector('#ui-tiles');
+    this._gameScore = document.querySelector('#ui-game-score');
+    this._bestScore = document.querySelector('#ui-best-score');
   }
 
   #createTile(position, value) {
     let tileWrapper = document.createElement('div');
     tileWrapper.classList.add(`tile`, `pos${position.i}-${position.j}`, `tile-${value}`);
+    //tileWrapper.classList.add('new');
 
     let tileValue = document.createElement('div');
     tileValue.classList.add('tile__value');
@@ -28,5 +31,25 @@ export default class UIController {
         }
       }
     }
+  }
+
+  updateScore(addedScore, gameScore) {
+    if (addedScore === 0) return;
+    let rect = this._gameScore.getBoundingClientRect();
+    let coord = {
+      x: rect.left + rect.width / 2, 
+      y: rect.top, 
+    };
+    this._gameScore.textContent = gameScore;
+
+    let score = document.createElement('div');
+    score.textContent = `+${addedScore}`;
+    // score.style.left = coord.x;
+    // score.style.top = coord.y;
+    score.classList.add('score');
+    this._gameScore.append(score);
+    setTimeout(() => {
+      score.remove();
+    }, 1000);
   }
 }
