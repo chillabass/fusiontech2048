@@ -44,7 +44,7 @@ export default class Game {
       const tile = this.#generateNewTile();
       let probability = Math.random();
       if (i === 1 && probability >= 0.75) tile.value = 4;
-      this.boardOfTiles[tile.y][tile.x] = tile.value;
+      this.boardOfTiles[tile.x][tile.y] = tile.value;
     }
     console.log(this.boardOfTiles);
     this.controller.render(this.boardOfTiles);
@@ -59,10 +59,12 @@ export default class Game {
     };
 
     if (moveFunctions.hasOwnProperty(direction)) {
-      moveFunctions[direction].call(this);
-      // const tile = this.#generateNewTile();
-      // this.boardOfTiles[tile.y][tile.x] = tile.value;
-      this.controller.render(this.boardOfTiles);
+      let isShifted = moveFunctions[direction].call(this);
+      if (isShifted) {
+        const tile = this.#generateNewTile();
+        this.boardOfTiles[tile.x][tile.y] = tile.value;
+        this.controller.render(this.boardOfTiles);
+      }
       console.log(this.boardOfTiles);
     }
   }
@@ -70,6 +72,8 @@ export default class Game {
   #moveLeft() {
     console.log('move left');
 
+    let isShifted = false;
+    
     for (let i = 0; i < this.sizeOfBoard; ++i) {
       // Calculate tiles
       for (let j = 0; j < this.sizeOfBoard; ++j) {
@@ -97,16 +101,19 @@ export default class Game {
           continue;
         }
         for (; shiftValue; --j, --shiftValue) {
+          isShifted = true;
           this.boardOfTiles[i][j - 1] = this.boardOfTiles[i][j];
           this.boardOfTiles[i][j] = 0;
         }
       }
     }
+    return isShifted;
   }
 
   #moveRight() {
     console.log('move right');
 
+    let isShifted = false;
     for (let i = 0; i < this.sizeOfBoard; ++i) {
       for (let j = this.sizeOfBoard - 1; j >= 0; --j) {
         if (this.boardOfTiles[i][j] === 0) {
@@ -133,39 +140,91 @@ export default class Game {
           continue;
         }
         for (; shiftValue; ++j, --shiftValue) {
+          isShifted = true;
           this.boardOfTiles[i][j + 1] = this.boardOfTiles[i][j];
           this.boardOfTiles[i][j] = 0;
         }
       }
     }
+    return isShifted;
   }
 
 
   #moveUp() {
     console.log('move up');
 
+    let isShifted = false;
     for (let j = 0; j < this.sizeOfBoard; ++j) {
-      for (let i = 1; i < this.sizeOfBoard; ++i) {
-        if (this.boardOfTiles[i - 1][j] && this.boardOfTiles[i][j]
-          && this.boardOfTiles[i - 1][j] === this.boardOfTiles[i][j]) {
-          this.boardOfTiles[i - 1][j] <<= 1;
+      for (let i = 0; i < this.sizeOfBoard; ++i) {
+        if (this.boardOfTiles[i][j] === 0) {
+          continue;
+        }
+        for (let k = i + 1; k < this.sizeOfBoard; ++k) {
+          if (this.boardOfTiles[k][j] === 0) {
+            continue;
+          } else {
+            if (this.boardOfTiles[k][j] === this.boardOfTiles[i][j]) {
+              this.boardOfTiles[i][j] <<= 1;
+              this.boardOfTiles[k][j] = 0;
+            } else {
+              break;
+            }
+          }
+        }
+      }
+      // Shift tiles
+      let shiftValue = 0;
+      for (let i = 0; i < this.sizeOfBoard; ++i) {
+        if (this.boardOfTiles[i][j] === 0) {
+          ++shiftValue;
+          continue;
+        }
+        for (; shiftValue; --i, --shiftValue) {
+          isShifted = true;
+          this.boardOfTiles[i - 1][j] = this.boardOfTiles[i][j];
           this.boardOfTiles[i][j] = 0;
         }
       }
     }
+    return isShifted;
   }
 
   #moveDown() {
     console.log('move down');
 
+    let isShifted = false;
     for (let j = 0; j < this.sizeOfBoard; ++j) {
-      for (let i = this.sizeOfBoard - 1; i > 0; --i) {
-        if (this.boardOfTiles[i - 1][j] && this.boardOfTiles[i][j]
-          && this.boardOfTiles[i - 1][j] === this.boardOfTiles[i][j]) {
-          this.boardOfTiles[i][j] <<= 1;
-          this.boardOfTiles[i - 1][j] = 0;
+      for (let i = this.sizeOfBoard - 1; i >= 0; --i) {
+        if (this.boardOfTiles[i][j] === 0) {
+          continue;
+        }
+        for (let k = i - 1; k >= 0; --k) {
+          if (this.boardOfTiles[k][j] === 0) {
+            continue;
+          } else {
+            if (this.boardOfTiles[i][j] === this.boardOfTiles[k][j]) {
+              this.boardOfTiles[i][j] <<= 1;
+              this.boardOfTiles[k][j] = 0;
+            } else {
+              break;
+            }
+          }
+        }
+      }
+      // Shift tiles
+      let shiftValue = 0;
+      for (let i = this.sizeOfBoard - 1; i >= 0; --i) {
+        if (this.boardOfTiles[i][j] === 0) {
+          ++shiftValue;
+          continue;
+        }
+        for (; shiftValue; ++i, --shiftValue) {
+          isShifted = true;
+          this.boardOfTiles[i + 1][j] = this.boardOfTiles[i][j];
+          this.boardOfTiles[i][j] = 0;
         }
       }
     }
+    return isShifted;
   }
 }
