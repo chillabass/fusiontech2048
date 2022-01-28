@@ -4,8 +4,8 @@ import UIController from "../UIController/UIController.js";
 
 export default class Game {
   constructor() {
-    this._sizeOfBoard = 4;
-    this.controller = new UIController(this._sizeOfBoard);
+    this.sizeOfBoard = 4;
+    this.controller = new UIController(this.sizeOfBoard);
     document.addEventListener('keydown', (event) => {
       event.preventDefault();
       this.moveTo(event.code)
@@ -13,10 +13,10 @@ export default class Game {
   }
 
   #clearBoard() {
-    this.boardOfTiles = new Array(this._sizeOfBoard);
-    for (let i = 0; i < this._sizeOfBoard; ++i) {
-      this.boardOfTiles[i] = new Array(this._sizeOfBoard);
-      for (let j = 0; j < this._sizeOfBoard; ++j) {
+    this.boardOfTiles = new Array(this.sizeOfBoard);
+    for (let i = 0; i < this.sizeOfBoard; ++i) {
+      this.boardOfTiles[i] = new Array(this.sizeOfBoard);
+      for (let j = 0; j < this.sizeOfBoard; ++j) {
         this.boardOfTiles[i][j] = 0;
       }
     }
@@ -60,74 +60,112 @@ export default class Game {
 
     if (moveFunctions.hasOwnProperty(direction)) {
       moveFunctions[direction].call(this);
-      //const tile = this.#generateNewTile();
-      //this.boardOfTiles[tile.y][tile.x] = tile.value;
+      // const tile = this.#generateNewTile();
+      // this.boardOfTiles[tile.y][tile.x] = tile.value;
+      this.controller.render(this.boardOfTiles);
+      console.log(this.boardOfTiles);
     }
   }
 
   #moveLeft() {
     console.log('move left');
-    // Shift tiles
-    
 
-    // Calculate
-    for (let i = 0; i < this._sizeOfBoard; ++i) {
-      for (let j = 1; j < this._sizeOfBoard; ++j) {
-        if ( this.boardOfTiles[i][j] && this.boardOfTiles[i][j - 1]
-          && this.boardOfTiles[i][j] === this.boardOfTiles[i][j - 1]) {
-          this.boardOfTiles[i][j - 1] <<= 1;
+    for (let i = 0; i < this.sizeOfBoard; ++i) {
+      // Calculate tiles
+      for (let j = 0; j < this.sizeOfBoard; ++j) {
+        if (this.boardOfTiles[i][j] === 0) {
+          continue;
+        }
+        for (let k = j + 1; k < this.sizeOfBoard; ++k) {
+          if (this.boardOfTiles[i][k] === 0) {
+            continue;
+          } else {
+            if (this.boardOfTiles[i][k] === this.boardOfTiles[i][j]) {
+              this.boardOfTiles[i][j] <<= 1;
+              this.boardOfTiles[i][k] = 0;
+            } else {
+              break;
+            }
+          }
+        }
+      }
+      // Shift tiles
+      let shiftValue = 0;
+      for (let j = 0; j < this.sizeOfBoard; ++j) {
+        if (this.boardOfTiles[i][j] === 0) {
+          ++shiftValue;
+          continue;
+        }
+        for (; shiftValue; --j, --shiftValue) {
+          this.boardOfTiles[i][j - 1] = this.boardOfTiles[i][j];
           this.boardOfTiles[i][j] = 0;
         }
       }
     }
-
-    // Shift again
-
-    console.log(this.boardOfTiles);
   }
 
   #moveRight() {
     console.log('move right');
 
-    for (let i = 0; i < this._sizeOfBoard; ++i) {
-      for (let j = this._sizeOfBoard - 1; j >= 0; --j) {
-        if ( this.boardOfTiles[i][j] && this.boardOfTiles[i][j - 1] 
-          && this.boardOfTiles[i][j] === this.boardOfTiles[i][j - 1]) {
-          this.boardOfTiles[i][j] <<= 1;
-          this.boardOfTiles[i][j - 1] = 0;
+    for (let i = 0; i < this.sizeOfBoard; ++i) {
+      for (let j = this.sizeOfBoard - 1; j >= 0; --j) {
+        if (this.boardOfTiles[i][j] === 0) {
+          continue;
+        }
+        for (let k = j - 1; k >= 0; --k) {
+          if (this.boardOfTiles[i][k] === 0) {
+            continue;
+          } else {
+            if (this.boardOfTiles[i][j] === this.boardOfTiles[i][k]) {
+              this.boardOfTiles[i][j] <<= 1;
+              this.boardOfTiles[i][k] = 0;
+            } else {
+              break;
+            }
+          }
+        }
+      }
+      // Shift tiles
+      let shiftValue = 0;
+      for (let j = this.sizeOfBoard - 1; j >= 0; --j) {
+        if (this.boardOfTiles[i][j] === 0) {
+          ++shiftValue;
+          continue;
+        }
+        for (; shiftValue; ++j, --shiftValue) {
+          this.boardOfTiles[i][j + 1] = this.boardOfTiles[i][j];
+          this.boardOfTiles[i][j] = 0;
         }
       }
     }
-    console.log(this.boardOfTiles);
   }
+
 
   #moveUp() {
     console.log('move up');
 
-    for (let j = 0; j < this._sizeOfBoard; ++j) {
-      for (let i = 1; i < this._sizeOfBoard; ++i) {
-        if ( this.boardOfTiles[i - 1][j] && this.boardOfTiles[i][j]
+    for (let j = 0; j < this.sizeOfBoard; ++j) {
+      for (let i = 1; i < this.sizeOfBoard; ++i) {
+        if (this.boardOfTiles[i - 1][j] && this.boardOfTiles[i][j]
           && this.boardOfTiles[i - 1][j] === this.boardOfTiles[i][j]) {
           this.boardOfTiles[i - 1][j] <<= 1;
           this.boardOfTiles[i][j] = 0;
         }
       }
     }
-    console.log(this.boardOfTiles);
   }
 
   #moveDown() {
     console.log('move down');
 
-    for (let j = 0; j < this._sizeOfBoard; ++j) {
-      for (let i = this._sizeOfBoard - 1; i > 0; --i) {
-        if ( this.boardOfTiles[i - 1][j] && this.boardOfTiles[i][j]
+    for (let j = 0; j < this.sizeOfBoard; ++j) {
+      for (let i = this.sizeOfBoard - 1; i > 0; --i) {
+        if (this.boardOfTiles[i - 1][j] && this.boardOfTiles[i][j]
           && this.boardOfTiles[i - 1][j] === this.boardOfTiles[i][j]) {
           this.boardOfTiles[i][j] <<= 1;
           this.boardOfTiles[i - 1][j] = 0;
         }
       }
     }
-    console.log(this.boardOfTiles);
   }
 }

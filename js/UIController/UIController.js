@@ -20,6 +20,7 @@ export default class UIController {
   }
 
   render(currentBoard) {
+    this._board.innerHTML = '';
     for (let i = 0; i < this.sizeOfBoard; ++i) {
       for (let j = 0; j < this.sizeOfBoard; ++j) {
         if (currentBoard[i][j] !== 0) {
