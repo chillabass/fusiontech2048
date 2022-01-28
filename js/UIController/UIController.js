@@ -8,7 +8,7 @@ export default class UIController {
 
   #createTile(position, value) {
     let tileWrapper = document.createElement('div');
-    tileWrapper.classList.add(`tile`, `pos${position.i}-${position.j}`, `tile-${value}`, `new`);
+    tileWrapper.classList.add(`tile`, `pos${position.i}-${position.j}`, `tile-${value}`);
 
     let tileValue = document.createElement('div');
     tileValue.classList.add('tile__value');

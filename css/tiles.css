@@ -178,8 +178,7 @@
 
 /* Animations */
 .new {
-  animation: new-tile 1s ease 0 normal;
-  -webkit-animation: new-tile 1s ease 0 normal;
+  animation: new-tile .1s .5s alternate 1 ease;
 }
 
 @keyframes new-tile {
@@ -188,14 +187,5 @@
   }
   100% {
     transform: scale(1.0);
-  }
-}
-
-@-webkit-keyframes new-tile {
-  0% {
-    -webkit-transform: scale(0.0);
-  }
-  100% {
-    -webkit-transform: scale(1.0);
   }
 }
