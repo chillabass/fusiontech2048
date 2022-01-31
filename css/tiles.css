@@ -22,10 +22,6 @@
   justify-content: center;
 }
 
-.tile__value {
-  
-}
-
 .tile-2 {
   background-color: #eee4da;
 }
@@ -100,9 +96,7 @@
 }
 
 /* Positions */
-/* 1 */
-.pos0-0 {
-}
+
 /* 2 */
 .pos0-1 {
   transform: translateX(calc(100% + var(--cell-gap)));

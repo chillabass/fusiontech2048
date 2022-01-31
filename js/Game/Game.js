@@ -6,11 +6,52 @@ export default class Game {
   constructor() {
     this.sizeOfBoard = 4;
     this.gameScore = 0;
+    this.bestScore = 0;
+    this.isGameOver = false;
+
     this.controller = new UIController(this.sizeOfBoard);
     document.addEventListener('keydown', (event) => {
       event.preventDefault();
       this.moveTo(event.code)
     });
+
+    const buttons = document.querySelectorAll('.restart');
+    buttons.forEach(item => {
+      let game = this;
+      item.addEventListener('click', () => {
+        this.startNewGame();
+      });
+    });
+
+    const reset = document.querySelector('#btn_reset');
+    reset.addEventListener('click', () => {
+      this.reset();
+    });
+  }
+
+  getGameData() {
+    let gameData = {
+      isGameOver: this.isGameOver,
+      gameScore: this.gameScore,
+      bestScore: this.bestScore,
+      board: this.boardOfTiles,
+    };
+    return gameData;
+  }
+
+  reset() {
+    // вывести модальное окно с предупреждением об удалении данных
+    this.isGameOver = false;
+    this.gameScore = 0;
+    this.bestScore = 0;
+    this.startNewGame();
+  }
+
+  setGameData(gameData) {
+    this.isGameOver = gameData.isGameOver;
+    this.gameScore = gameData.gameScore;
+    this.bestScore = gameData.bestScore;
+    this.boardOfTiles = gameData.board;
   }
 
   #clearBoard() {
@@ -32,7 +73,6 @@ export default class Game {
     do {
       tile.x = this.#getRandom(0, 3);
       tile.y = this.#getRandom(0, 3);
-      // console.log(this._boardOfTiles[tile.y][tile.x])
     } while (this.boardOfTiles[tile.x][tile.y] !== 0);
 
     tile.value = 2;
@@ -41,6 +81,9 @@ export default class Game {
 
   startNewGame() {
     this.#clearBoard();
+    this.isGameOver = false;
+    this.controller.setGameOver(this.isGameOver);
+    this.gameScore = 0;
     for (let i = 0; i < 2; ++i) {
       const tile = this.#generateNewTile();
       let probability = Math.random();
@@ -49,6 +92,7 @@ export default class Game {
     }
     console.log(this.boardOfTiles);
     this.controller.render(this.boardOfTiles);
+    this.controller.updateScore(0, 0, this.bestScore);
   }
 
   #checkGameOver() {
@@ -66,6 +110,8 @@ export default class Game {
   }
 
   moveTo(direction) {
+    if (this.isGameOver) return;
+
     const moveFunctions = {
       'ArrowLeft': this.#moveLeft,
       'ArrowRight': this.#moveRight,
@@ -79,15 +125,16 @@ export default class Game {
         const tile = this.#generateNewTile();
         this.boardOfTiles[tile.x][tile.y] = tile.value;
         this.controller.render(this.boardOfTiles);
-        this.controller.updateScore(result.addedScores, this.gameScore);
+        if (this.gameScore > this.bestScore) this.bestScore = this.gameScore;
+        this.controller.updateScore(result.addedScores, this.gameScore, this.bestScore);
       }
 
       console.log(this.boardOfTiles);
     }
     if (this.#checkGameOver()) {
+      this.isGameOver = true;
+      this.controller.setGameOver(this.isGameOver);
       console.log('game over');
-    } else {
-
     }
   }
 

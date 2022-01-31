@@ -24,9 +24,12 @@
           </div>
         </section>
         <section class="control-block block">
-          <input class="button" type="button" value="Reset" id="btn_reset" />
+          <input class="button" 
+          type="button" 
+          value="Reset" 
+          id="btn_reset" />
           <input
-            class="button"
+            class="button restart"
             type="button"
             value="New Game"
             id="btn_newgame"
@@ -60,13 +63,17 @@
             <div class="cells-row__cell"></div>
           </div>
           <!-- Tiles -->
-          <div class="tiles-container" id="ui-tiles">
-            <!-- <div class="tile pos0-0 tile-2">
-              <div class="tile__value">2</div>
-            </div> -->
-          </div>
+          <div class="tiles-container" id="ui-tiles"></div>
           <div class="game-over-panel">
-            <p class="game-over-panel__title">Game Over</p>
+            <div class="game-over-panel__inner">
+              <p class="game-over-panel__title">Game Over</p>
+              <input
+                class="button restart"
+                type="button"
+                value="Restart"
+                id="btn_restart"
+              />
+            </div>
           </div>
         </div>
       </section>
